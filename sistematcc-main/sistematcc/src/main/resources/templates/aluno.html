@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="estilos.css">
+
+        <link rel="stylesheet" href="./styles/estilos.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  
+    <div id="form-header">
+        <!-- Ícone que representa o dark mode ou light mode -->
+        <!-- <button id="mode-button">
+          <i id="mode-icon" class="fas fa-moon"></i>
+        </button>
+
+
+    <div id="form-header">
+        <i id="mode-icon" class="fas fa-moon"></i>
+    </div> -->
+
+    <div class="botoes-fonte">
+        <input type="checkbox" class="checkbox" id="chk">
+        <label class="label" for="chk">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+            <div class="ball"></div>
+        </label>
+        <button type="button" class="btn btn-secondary" id="btnDiminuir" class="botao-diminui-fonte">Fonte -</button>
+        <button type="button" class="btn btn-secondary" id="btnAumentar" class="botao-aumenta-fonte">Fonte +</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+
+    <div th:insert="~{fragments/frag :: navProf}"></div>
+
+    <div class="container mt-2">
+
+        <div class="row">
+            <!-- Inicio Bloco Modal -->
+            <!-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#insertAluno">Inserir
+                Aluno</button> -->
+
+            <div class="modal" id="insertAluno" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"> Inserir novo Aluno</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" th:action="@{/index/saveUsuario}">
+                                <div class="mb-3">
+                                    <label for="nome" class="form-label">Nome*</label>
+                                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome*">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email*</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Email*">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="telefone" class="form-label">Telefone*</label>
+                                    <input type="number" class="form-control" id="telefone" name="telefone"
+                                        placeholder="Telefone*">
+                                </div>
+                                <input hidden type="text" class="form-control" id="tipo" name="tipo" value="aluno">
+                                <div class="mb-3">
+                                    <label for="identificador" class="form-label">Identificador*</label>
+                                    <input type="text" class="form-control" id="Identificador" name="Identificador"
+                                        placeholder="Identificador*">
+                                </div>
+                                <div class="form-group mt-2">
+                                    <label class="control-label" for="dataNascimento"> Data de nascimento*</label>
+                                    <input type="date" id="dataNascimento" class="form-control" name="dataNascimento"
+                                        required autofocus="autofocus" />
+                                </div>
+                                <div class="form-group mt-2">
+                                    <label for="img" class="control-label">Imagem(opcional)</label>
+                                    <input type="file" class="form-control" id="img" name="file">
+                                </div>
+                                <div class="form-outline mt-2 mb-4">
+                                    <label class="form-label" for="username">Nome de Usuário*</label>
+                                    <input type="text" id="username" class="form-control" name="username" placeholder="Nome de Usuário*" />
+                                    
+                                </div>
+                                <div class="form-outline mt-2 mb-4">
+                                    <label class="form-label" for="password">Senha*</label>
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="Digite uma senha" />
+                                    
+                                </div>
+                                <button type="submit" class="btn btn-secondary">Salvar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim Bloco Modal -->
+
+        </div>
+
+        <th:block th:insert="~{mensagemValidacao}"></th:block>
+
+        <div class="col-lg-10 mt-5 mb-5">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="titulo-th" scope="col"></th>
+                        <th class="titulo-th" scope="col">Nome </th>
+                        <th class="titulo-th" scope="col">Email</th>
+                        <th class="titulo-th" scope="col">Identificador</th>
+                        <th class="titulo-th" scope="col">Telefone</th>
+                        <th class="titulo-th" scope="col">Data de Nascimento</th>
+                        <th class="titulo-th" scope="col">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="a: ${alunos}">
+                        <td th:text="${a.usuarioId}"></td>
+                        <td th:text="${a.nome}"></td>
+                        <td th:text="${a.email}"></td>
+                        <td th:text="${a.identificador}"></td>
+                        <td th:text="${a.telefone}"></td>
+                        <td th:text="${a.dataNascimento}"></td>
+                        <td><a class=" btn btn-secondary" th:href="@{/index/deleteusuario/{id}(id=${a.usuarioId})}"
+                                role="button">Deletar</a>
+
+
+                            <!-- Inicio Bloco Modal -->
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                th:attr="data-bs-target='#updateAluno_'+${a.usuarioId}">Editar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#insertAluno">Inserir
+                                    Aluno</button>
+                            <div class="modal" th:id="updateAluno_+${a.usuarioId}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Atualizar Aluno</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post"
+                                                th:action="@{/index/updateusuario/{id}(id=${a.usuarioId})}">
+                                                <div class="mb-3">
+                                                    <label for="nome" class="form-label">Nome</label>
+                                                    <input type="text" class="form-control" id="nome" name="nome"
+                                                        th:value="${a.nome}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="email" name="email"
+                                                        th:value="${a.email}">
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <label for="tipo" class="control-label">Tipo</label>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="tipo">
+                                                        <option selected th:value=${a.tipo} th:text="${a.tipo}">Tipo*
+                                                        </option>
+                                                        <option value="aluno">Aluno*</option>
+                                                        <option value="prof">Professor</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="identificador" class="form-label">Identificador</label>
+                                                    <input type="text" class="form-control" id="identificador"
+                                                        name="identificador" th:value="${a.identificador}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="telefone" class="form-label">Telefone</label>
+                                                    <input type="number" class="form-control" id="telefone"
+                                                        name="telefone" th:value="${a.telefone}">
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <label class="control-label" for="dataNascimento"> Data de
+                                                        nascimento </label> <input type="date" id="dataNascimento"
+                                                        class="form-control" name="dataNascimento"
+                                                        th:value="${a.dataNascimento}" required autofocus="autofocus" />
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <label for="img" class="control-label">Imagem</label>
+                                                    <input type="file" class="form-control" id="img" name="file"
+                                                        th:text="${a.img}">
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <label class="control-label" for="username"> Username </label>
+                                                    <input id="username" class="form-control" name="username"
+                                                        th:value="${a.username}" required autofocus="autofocus" />
+                                                </div>
+
+                                                <div class="form-group mt-2">
+                                                    <label class="control-label" for="password"> Password </label>
+                                                    <input placeholder="Digite uma senha" id="password" class="form-control" type="password"
+                                                        name="password" required autofocus="autofocus"/>
+                                                </div>
+                                                <button type="submit" class="btn btn-secondary">Salvar</button>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fim Bloco Modal -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    </div>
+    <script src="./styles/estilos.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</body>
+<footer>
+    <div th:insert="~{fragments/frag :: footer}"></div>
+</footer>
+
+</html>

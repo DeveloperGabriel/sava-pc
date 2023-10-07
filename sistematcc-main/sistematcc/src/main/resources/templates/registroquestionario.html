@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RegistrosQuest</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+		<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+		<link th:href="@{/css/styles.css}" rel="stylesheet">
+		<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+		<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+		<link rel="stylesheet" href="./styles/estilos.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	</head>
+    <body>
+		<div class="botoes-fonte">
+			<button type="button" class="btn btn-secondary" id="btnDiminuir" class="botao-diminui-fonte">Fonte -</button>
+			<button type="button" class="btn btn-secondary" id="btnAumentar" class="botao-aumenta-fonte">Fonte +</button>
+		</div>
+		<script src="./styles/estilos.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+        
+		<div th:insert="fragments/frag :: navProf"></div>
+		
+		<div class="container mt-2">
+			 <div class="row">
+            <th:block th:include="mensagemValidacao"></th:block>
+               <h5 class="card-subtitle text-body-secondary mt-2 " th:text="${turma.nome}">TurmaNome</h5>
+                            
+                <table class="table">
+                    <thead >
+                      <tr >
+                        <th scope="col">Quesitonario</th>
+                        <th scope="col">Aluno</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Resposta</th>
+                      </tr>
+                    </thead>
+                    <tbody th:each=" reg , i : ${registros}">
+                      <tr th:each=" resp , j : ${reg.respostasQuestionario}">
+                        <th scope="row" >
+                          <h6 class="card-subtitle text-body-secondary mt-2 " th:text="${reg.questionario.nome}">Questionario</h6> </th>
+                        <th scope="row" > 
+                          <h6 class="card-subtitle text-body-secondary mt-2 " th:text="${reg.usuario.nome}">Aluno</h6></th>
+                        <th scope="row" > 
+                          <h6 class="card-subtitle text-body-secondary mt-2 " th:text="${resp.perguntaQuestionario.titulo}">Titulo</h6>
+                        </th>
+                        <div th:if="${resp.tipo=='multipla escolha'}">
+                          <td class="card-text" >
+                            <h6 class="card-subtitle text-body-secondary mt-2 " th:text="${resp.opRespostaId}">Resposta</h6>
+                          </td> 
+                        </div>
+                        <div th:if="${resp.tipo=='dissertativa'}">
+                          <td class="card-text" >
+                            <h6 class="card-subtitle text-body-secondary mt-2 " th:text="${resp.resposta}">Resposta</h6>
+                          </td>
+                        </div>        
+                      </tr>  
+                    </tbody>
+                  </table>
+        </div>
+			
+		</div>
+    </body>
+    <footer>
+        
+    </footer>
+</html>
+
